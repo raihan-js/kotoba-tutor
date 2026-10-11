@@ -22,3 +22,21 @@
   errors (precedent: JST 2014 pseudo-errors): exact gold tags by construction.
   150 correct + 150 injected (particles/conjugation/politeness/word-choice).
   TEC-JL/NAIST upgrade to v1.1 when access granted. Owner-approved.
+
+## 2026-10-11 — M2 graph loop proven (fake tests 14/14 + live FLEURS + TTS roundtrip)
+- LangGraph StateGraph needs a TypedDict schema; plain-dict state silently
+  drops input keys between nodes (caught by tests).
+- Qwen3-Swallow-RL echoes instructions in vLLM completion mode; chat API +
+  1-shot example + /no_think returns valid JSON. Prompt braces must be
+  doubled for .format (caught by tests).
+- Pinned av build lacks open(metadata_errors) needed by stock
+  faster-whisper for file paths — transcribe_backend feeds float32 numpy
+  (scipy resample) instead. scipy added (free, small).
+- Accent reuse path works: OpenJTalk labels + pyworld F0 + scorer.pkl via
+  akusento-venv subprocess; whisper words bound the region, label morae
+  split it uniformly (no forced aligner on PC — disclosed approximation;
+  TTS audio 16/19 valid, FLEURS 21/54).
+- Closed loop on synthetic learner audio: TTS spoke 僕が彼女無しに…,
+  whisper transcribed, Swallow flagged が->は with exact gold restoration,
+  accent 0.5, explanation spoken back to wav.
+- TTS/explain voice is the SBV2 JVNv-F1 research voice (never published).
