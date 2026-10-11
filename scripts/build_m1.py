@@ -16,7 +16,9 @@ from kotoba.inject import INJECTORS
 
 def load_tatoeba(path: str) -> list[tuple[str, str]]:
     rows = []
-    for line in open(path, encoding="utf-8"):
+    with open(path, encoding="utf-8") as f:
+        lines = f.readlines()
+    for line in lines:
         parts = line.rstrip("\n").split("\t")
         if len(parts) == 3:
             rows.append((parts[0], parts[2]))
