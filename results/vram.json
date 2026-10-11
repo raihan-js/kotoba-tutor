@@ -1,0 +1,23 @@
+{
+  "gpu": "RTX 3060 12GB",
+  "baseline_mb": 1180,
+  "peak_mb": 10873,
+  "latencies": {
+    "vllm_load_s": 112.7,
+    "vllm_64tok_s": 1.18,
+    "whisper_load_s": 2.7,
+    "whisper_5s_s": 0.01
+  },
+  "vllm_sample": "  \nAnswer: 「ありがとう」は感謝の気持ちを表す言葉で、相手に対して感謝の意を伝えるときに使う。  \n\n---\n\n### 2. 文法問題  \n次の文の空欄に適切な語を入れてください。  \n\n1. 彼は毎朝 ___ (",
+  "sbv2_gpu_delta_mb": 1777,
+  "sbv2_cpu_synth_s": 1.43,
+  "verdict": "GO: vLLM(util 0.75, ctx 2048) + whisper-int8-GPU peak 10873MB; SBV2 on CPU (GPU needs +1777MB, total would exceed 12288MB)",
+  "vllm_env": [
+    "VLLM_USE_FLASHINFER_SAMPLER=0",
+    "VLLM_ATTENTION_BACKEND=FLASH_ATTN",
+    "VLLM_WORKER_MULTIPROC_METHOD=spawn",
+    "venv bin on PATH",
+    "ninja installed"
+  ],
+  "notes": "Qwen3-Swallow RL rambles into quiz generation without thinking control; use enable_thinking=False or /no_think + tight prompts in M2. vLLM load 113s one-time; 64tok in 1.18s."
+}
