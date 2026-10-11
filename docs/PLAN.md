@@ -12,8 +12,11 @@ interface = push-to-talk CLI, web UI deferred.
 
 ## M0 — VRAM spike (1 day)
 
-Load vLLM (Swallow-8B-AWQ) + faster-whisper int8 + SBV2JA in one process on
-the RTX 3060 12GB; record peak per-model + total VRAM to `results/vram.json`.
+Load vLLM (Swallow-8B-AWQ; exact weight ID pinned here in M0) +
+faster-whisper int8 in the kotoba venv and SBV2JA in the akusento tts venv
+(separate venvs over a numpy ABI split — one process is impossible, so record
+per-venv peaks plus nvidia-smi total) on the RTX 3060 12GB; record to
+`results/vram.json`.
 Go/no-go: all-GPU, else ASR→CPU fallback (planned, not a failure). No tutor
 code. Downloads need approval if >$5 (HF is free; just disk).
 
