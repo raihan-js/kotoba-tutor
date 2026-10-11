@@ -31,9 +31,7 @@ def ok(text: str) -> bool:
     latin = sum(c.isascii() and c.isalpha() for c in text)
     if latin / max(len(text), 1) > 0.15:
         return False
-    if not any("\u3040" <= c <= "\u309f" for c in text):  # hiragana
-        return False
-    return True
+    return any("\u3040" <= c <= "\u309f" for c in text)  # hiragana present
 
 
 def main() -> None:
