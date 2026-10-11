@@ -15,8 +15,8 @@ _TAGGER: Any = None
 def tagger() -> Any:
     global _TAGGER
     if _TAGGER is None:
-        import unidic_lite  # type: ignore[import-untyped]
-        from fugashi import Tagger  # type: ignore[import-untyped]
+        import unidic_lite
+        from fugashi import Tagger
 
         d = unidic_lite.DICDIR
         _TAGGER = Tagger(f"-r {d}/mecabrc -d {d}")

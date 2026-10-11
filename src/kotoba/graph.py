@@ -36,8 +36,8 @@ State = TState
 def transcribe_backend(wav_path: str) -> dict[str, Any]:
     # NOTE: pinned av build lacks open(metadata_errors) which stock
     # faster-whisper needs for file paths — feed float32 numpy instead.
-    from faster_whisper import WhisperModel  # type: ignore[import-untyped]
-    from scipy.io import wavfile  # type: ignore[import-untyped]
+    from faster_whisper import WhisperModel
+    from scipy.io import wavfile
 
     sr, y = wavfile.read(wav_path)
     audio = y.astype("float32")
@@ -49,7 +49,7 @@ def transcribe_backend(wav_path: str) -> dict[str, Any]:
     if sr != 16000:
         from math import gcd
 
-        from scipy.signal import resample_poly  # type: ignore[import-untyped]
+        from scipy.signal import resample_poly
 
         g = gcd(sr, 16000)
         audio = resample_poly(audio, 16000 // g, sr // g).astype("float32")
@@ -104,7 +104,8 @@ ANALYSE_PROMPT = """あなたは日本語教師です。学習者の文を直し
 def analyse_backend(text: str, llm_fn: Callable[[str], str]) -> dict[str, Any]:
     raw = llm_fn(ANALYSE_PROMPT.format(text=text))
     try:
-        return json.loads(raw[raw.index("{"):raw.rindex("}") + 1])
+        out: dict[str, Any] = json.loads(raw[raw.index("{"):raw.rindex("}") + 1])
+        return out
     except (ValueError, json.JSONDecodeError):
         return {"has_error": False, "error_type": "none", "span": "",
                 "correction": text, "explanation": "", "_raw": raw[:200]}
@@ -124,7 +125,8 @@ def accent_backend(wav_path: str, transcript: str,
         if not last:
             return {"scored": False,
                     "reason": "empty stdout: " + r.stderr.strip()[-200:]}
-        return json.loads(last[-1])
+        scored: dict[str, Any] = json.loads(last[-1])
+        return scored
     except (json.JSONDecodeError, subprocess.SubprocessError, OSError) as e:
         return {"scored": False, "reason": f"{type(e).__name__}"}
 
@@ -180,7 +182,7 @@ def build_graph(transcribe_fn: Callable[[str], dict[str, Any]] = transcribe_back
         st = store if store is not None else {}
         lid = s.get("learner_id", "default")
         if not isinstance(st, dict):  # LangGraph BaseStore
-            from langgraph.store.base import BaseStore  # type: ignore[import-untyped]
+            from langgraph.store.base import BaseStore
 
             assert isinstance(st, BaseStore)
             ns = ("kotoba", lid)
