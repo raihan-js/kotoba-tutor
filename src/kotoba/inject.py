@@ -7,14 +7,16 @@ original — gold defines correctness; disclosed, biases against the tutor.
 """
 from __future__ import annotations
 
-_TAGGER = None
+from typing import Any
+
+_TAGGER: Any = None
 
 
-def tagger() -> object:
+def tagger() -> Any:
     global _TAGGER
     if _TAGGER is None:
-        import unidic_lite
-        from fugashi import Tagger
+        import unidic_lite  # type: ignore[import-untyped]
+        from fugashi import Tagger  # type: ignore[import-untyped]
 
         d = unidic_lite.DICDIR
         _TAGGER = Tagger(f"-r {d}/mecabrc -d {d}")
@@ -24,7 +26,7 @@ def tagger() -> object:
 def toks(text: str) -> list[tuple[str, str, str]]:
     """(surface, pos1, pos2) per token."""
     out = []
-    for w in tagger()(text):  # type: ignore[union-attr]
+    for w in tagger()(text):
         out.append((w.surface, w.feature.pos1, w.feature.pos2))
     return out
 
