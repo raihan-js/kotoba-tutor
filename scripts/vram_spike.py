@@ -51,7 +51,6 @@ def main() -> None:
         gen_text: str = out[0].outputs[0].text
 
         import numpy as np
-
         from faster_whisper import WhisperModel
 
         t0 = time.monotonic()

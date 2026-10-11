@@ -13,3 +13,12 @@
 - Qwen3-Swallow RL rambles (quiz generation) without thinking control; M2
   must use enable_thinking=False + tight prompts. 64tok in 1.18s.
 - LangSmith key confirmed working (~/.config/langsmith/key, sees keiri data).
+
+## 2026-10-11 — M1 corpus survey: Tatoeba+injection now, forms in parallel
+- TEC-JL (error-tagged, ideal) and NAIST Lang-8 raw (1.3M JA pairs) are both
+  behind Google-Form access requests — owner files those; cLang-8 rejected
+  (machine-generated targets, not human gold).
+- M1 builds on Tatoeba (CC-BY 2.0 FR, direct download) + rule-injected
+  errors (precedent: JST 2014 pseudo-errors): exact gold tags by construction.
+  150 correct + 150 injected (particles/conjugation/politeness/word-choice).
+  TEC-JL/NAIST upgrade to v1.1 when access granted. Owner-approved.

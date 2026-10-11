@@ -1,0 +1,13 @@
+{
+  "n": 300,
+  "n_correct": 150,
+  "n_injected": 150,
+  "per_type": {
+    "particle": 37,
+    "conjugation": 37,
+    "politeness": 37,
+    "choice": 39
+  },
+  "source": "Tatoeba jpn_sentences (CC-BY 2.0 FR)",
+  "gold": "Tatoeba original; injection tags exact by construction"
+}
