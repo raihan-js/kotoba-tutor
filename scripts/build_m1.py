@@ -89,10 +89,12 @@ def main() -> None:
 
     c = Client()
     name = "kotoba-corrections-300-v1"
+    from langsmith.utils import LangSmithNotFoundError
+
     try:
         c.delete_dataset(dataset_name=name)
-    except Exception:
-        pass
+    except LangSmithNotFoundError:
+        print("no prior dataset to delete")
     ds = c.create_dataset(name, description="Kotoba-Tutor M1: 150 correct + "
                           "150 rule-injected JA learner errors (Tatoeba)")
     c.create_examples(
