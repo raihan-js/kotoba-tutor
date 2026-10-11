@@ -9,7 +9,6 @@ import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
-from kotoba.graph import analyse_backend  # noqa: E402
 
 PROFILE_LINE = ("この学習者は particle の誤りが多い(12回)、conjugation が4回、"
                 "politeness が2回、choice が1回。これらに注意して判定して。")
@@ -83,10 +82,9 @@ def main() -> None:
     Path("results/m3.json").write_text(json.dumps(res, indent=2,
                                                   ensure_ascii=False) + "\n")
     with open("results/m3_rows.jsonl", "w", encoding="utf-8") as f:
-        for r, a, b in zip(rows, mem, less):
-            f.write(json.dumps({"learner": r["learner"], "gold": r["gold"],
+        f.writelines(json.dumps({"learner": r["learner"], "gold": r["gold"],
                                 "error_type": r["error_type"], "memory": a,
-                                "memoryless": b}, ensure_ascii=False) + "\n")
+                                "memoryless": b}, ensure_ascii=False) + "\n" for r, a, b in zip(rows, mem, less))
     print(json.dumps(res, indent=2, ensure_ascii=False))
 
 

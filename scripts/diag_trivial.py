@@ -3,8 +3,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
-from diag_prompt import P  # noqa: E402
-from kotoba.graph import make_llm_backend  # noqa: E402
+from diag_prompt import P
+
+from kotoba.graph import make_llm_backend
 
 
 def main() -> None:

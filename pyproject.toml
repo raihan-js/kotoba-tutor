@@ -1,0 +1,37 @@
+[project]
+name = "kotoba-tutor"
+version = "0.1.0"
+description = "Voice-first Japanese tutor agent in LangGraph (local Swallow-8B, Akusento accent scorer)"
+requires-python = ">=3.10"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+dependencies = [
+  "faster-whisper",
+  "langgraph",
+  "langchain-core",
+  "langsmith",
+  "fugashi",
+  "unidic-lite",
+  "scipy",
+  "numpy",
+  "vllm",
+  "ninja",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "mypy"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true
