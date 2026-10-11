@@ -52,7 +52,7 @@ def main() -> None:
     # Per-type targeted scan (fire rates differ 97% vs 1%; round-robin skews).
     used = {t for _, t in pool[:150]}
     injected = []
-    per, need = {}, 38
+    per = {}
     for et in ["particle", "conjugation", "politeness", "choice"]:
         per[et] = 0
         for sid, text in pool[150:]:
