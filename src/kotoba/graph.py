@@ -193,6 +193,7 @@ def build_graph(transcribe_fn: Callable[[str], dict[str, Any]] = transcribe_back
             prof["n_sessions"] += 1
             st.put(ns, "profile", prof)
             return {"profile": prof}
+        prof = st.get(lid, {"counts": {}, "n_sessions": 0})
         a = s["analysis"]
         if a.get("has_error"):
             et = a.get("error_type", "?")
