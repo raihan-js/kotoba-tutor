@@ -82,6 +82,11 @@ def main() -> None:
     res = {"n": len(rows), "memory": metrics(mem), "memoryless": metrics(less)}
     Path("results/m3.json").write_text(json.dumps(res, indent=2,
                                                   ensure_ascii=False) + "\n")
+    with open("results/m3_rows.jsonl", "w", encoding="utf-8") as f:
+        for r, a, b in zip(rows, mem, less):
+            f.write(json.dumps({"learner": r["learner"], "gold": r["gold"],
+                                "error_type": r["error_type"], "memory": a,
+                                "memoryless": b}, ensure_ascii=False) + "\n")
     print(json.dumps(res, indent=2, ensure_ascii=False))
 
 

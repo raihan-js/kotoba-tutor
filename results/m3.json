@@ -1,0 +1,25 @@
+{
+  "n": 300,
+  "memory": {
+    "false_correction": 0.92,
+    "recall": {
+      "politeness": 0.0,
+      "conjugation": 0.0,
+      "choice": 0.0,
+      "particle": 0.919
+    },
+    "strict_correction": 0.127,
+    "explanation_ok": 0.873
+  },
+  "memoryless": {
+    "false_correction": 0.94,
+    "recall": {
+      "politeness": 0.0,
+      "conjugation": 0.0,
+      "choice": 0.0,
+      "particle": 0.973
+    },
+    "strict_correction": 0.153,
+    "explanation_ok": 0.937
+  }
+}

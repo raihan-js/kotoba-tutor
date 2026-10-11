@@ -40,3 +40,19 @@
   whisper transcribed, Swallow flagged が->は with exact gold restoration,
   accent 0.5, explanation spoken back to wav.
 - TTS/explain voice is the SBV2 JVNv-F1 research voice (never published).
+
+## 2026-10-11 — M3 eval: tutor brain collapses to "particle" (results/m3.json)
+- Frozen-prompt result (prereg kept): false-correction 0.92/0.94,
+  recall particle 0.92/0.97, conjugation/politeness/choice 0.0, strict 0.13.
+- Confusion (m3_rows.jsonl): predicts particle on 285/300 rows, never the
+  other three types. Type classification is collapsed, not just weak.
+- Memory line: no detectable effect (0.92 vs 0.94; identical recall shape).
+  Valid null outcome per prereg — the store only feeds the scheduler, and
+  the profile reminder changes nothing.
+- False-correction is an UPPER bound: gold "correct" rows are unverified
+  Tatoeba crowdsource; sample complaint (方->人) is debatable, not clear
+  model error. Calibration anchor: 4/4 trivial sentences judged 正しい —
+  the model can judge, it collapses on real learner-style text.
+- Neutral judge-first prompt retest: same all-誤り → not prompt framing.
+- Implication (v1.1, not now): analyse needs constrained type output or a
+  classifier head, not free JSON. M2 loop itself works end to end.
