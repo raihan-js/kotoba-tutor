@@ -1,0 +1,23 @@
+{
+  "n": 300,
+  "method": "two-stage (A detect + B single-label)",
+  "false_correction": 0.94,
+  "per_type": {
+    "particle": {
+      "recall": 0.0,
+      "n": 37
+    },
+    "conjugation": {
+      "recall": 0.0,
+      "n": 37
+    },
+    "politeness": {
+      "recall": 0.0,
+      "n": 37
+    },
+    "choice": {
+      "recall": 0.0,
+      "n": 39
+    }
+  }
+}
