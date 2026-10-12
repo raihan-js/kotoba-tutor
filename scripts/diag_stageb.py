@@ -9,8 +9,8 @@ from kotoba.graph import TYPE_LABELS, TYPE_PROMPT, make_llm_backend
 
 def main() -> None:
     llm = make_llm_backend()
-    rows = [json.loads(line) for line in
-            open("results/m1_rows.jsonl", encoding="utf-8")]
+    with open("results/m1_rows.jsonl", encoding="utf-8") as f:
+        rows = [json.loads(line) for line in f]
     sample = [r for r in rows if r["error_type"] != "none"][:8]
     for r in sample:
         span = r["detail"].split("->")[0] if "->" in r["detail"] else ""

@@ -26,7 +26,7 @@ PARTICLES = ("は", "が", "を", "に", "で", "へ", "と", "や", "も", "の
 def _pos(text: str) -> set[tuple[str, str]]:
     try:
         return {(p1, p2) for _, p1, p2 in toks(text)}
-    except Exception:
+    except (RuntimeError, ValueError):
         return set()
 
 
