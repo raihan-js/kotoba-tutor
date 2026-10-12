@@ -107,3 +107,14 @@
 - Bottom line: the brain fix is the CORRECTOR (detection+correction
   quality), not the typer. Next options: constrained correction (retry +
   self-check loop), bigger/cold model, or supervised correction head.
+
+## 2026-10-12 — fix-loop verdict: MIXED per prereg rule (results/fixloop.json)
+- k=3 (temp 0.7, seed 0) + unflag-on-identical + rule-typer majority vote,
+  Tatoeba 300: false-correction 0.94 -> 0.693 (DOWN, real gain), strict
+  0.13-0.15 -> 0.12 (FLAT, not up). Prereg rule needed both: partial fix.
+- Collapse broken: recall spreads (part 0.32, conj 0.08, pol 0.22, choice
+  0.44) instead of all-particle. Voting diversifies; generator doesn't improve.
+- Conclusion: detection side fixable with loops+voting; correction quality
+  needs a better generator or supervised head. Brain-fix v2 = correction
+  model, not plumbing. (Side note: a stray ollama vision server held 8GB of
+  GPU mid-run; owner-approved kill, uvicorn server left alone.)

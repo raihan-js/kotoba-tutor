@@ -1,0 +1,50 @@
+{
+  "n": 300,
+  "method": "k=3 retry + rule-typer majority vote",
+  "false_correction": 0.693,
+  "per_type": {
+    "particle": {
+      "recall": 0.324,
+      "n": 37
+    },
+    "conjugation": {
+      "recall": 0.081,
+      "n": 37
+    },
+    "politeness": {
+      "recall": 0.216,
+      "n": 37
+    },
+    "choice": {
+      "recall": 0.436,
+      "n": 39
+    }
+  },
+  "strict_correction": 0.12,
+  "confusion": {
+    "choice>choice": 17,
+    "choice>conjugation": 3,
+    "choice>none": 12,
+    "choice>particle": 7,
+    "conjugation>choice": 8,
+    "conjugation>conjugation": 3,
+    "conjugation>none": 11,
+    "conjugation>particle": 6,
+    "conjugation>politeness": 9,
+    "none>choice": 43,
+    "none>conjugation": 14,
+    "none>none": 46,
+    "none>particle": 27,
+    "none>politeness": 20,
+    "particle>choice": 8,
+    "particle>conjugation": 3,
+    "particle>none": 9,
+    "particle>particle": 12,
+    "particle>politeness": 5,
+    "politeness>choice": 6,
+    "politeness>conjugation": 2,
+    "politeness>none": 15,
+    "politeness>particle": 6,
+    "politeness>politeness": 8
+  }
+}
