@@ -74,7 +74,8 @@ def main() -> None:
     from collections import Counter
 
     for name in ["results/m1_rows.jsonl", "results/v11_rows.jsonl"]:
-        rows = [json.loads(line) for line in open(name, encoding="utf-8")]
+        with open(name, encoding="utf-8") as f:
+            rows = [json.loads(line) for line in f]
         cm = Counter()
         for r in rows:
             if r["error_type"] == "none":
