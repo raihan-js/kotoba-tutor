@@ -55,7 +55,7 @@ def main() -> None:
     ex = list(c.list_examples(dataset_id=ds.id))
     rows = []
     for i, e in enumerate(ex):
-        r = {"id": f"r{i}", "learner": e.inputs["learner"], **e.outputs}
+        r = {"id": f"r{i}", **e.outputs, "learner": e.inputs["learner"]}
         rows.append(r)
     print("rows:", len(rows))
     # Resumable: per-row outputs flushed incrementally (survives timeouts).

@@ -54,12 +54,16 @@ def main() -> None:
     edits = parse_m2(str(base / "tec-jl.char.m2"))
     assert len(src) == len(ref0) == len(edits), (len(src), len(edits))
     rows = []
+    dropped_identical = 0
     for i, (s, r, es) in enumerate(zip(src, ref0, edits)):
         real = [e for e in es if e != "noop"]
         if not real:
             rows.append({"id": f"t{i:04d}", "learner": s, "gold": s,
                          "error_type": "none", "detail": "",
                          "source": "tec-jl/noop"})
+            continue
+        if s == r:
+            dropped_identical += 1  # edit invisible in plain text: untestable
             continue
         types = {tag_to_type(e) for e in real} - {None}
         if len(types) == 1:

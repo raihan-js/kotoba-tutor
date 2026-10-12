@@ -1,26 +1,12 @@
 {
-  "n": 1288,
-  "dataset": "kotoba-tecjl-gold-v1",
-  "memory": {
-    "false_correction": 0.947,
-    "recall": {
-      "choice": 0.0,
-      "particle": 0.942,
-      "politeness": 0.0,
-      "conjugation": 0.0
-    },
-    "strict_correction": 0.153,
-    "explanation_ok": 0.893
+  "n": 1214,
+  "per_type": {
+    "none": 812,
+    "particle": 112,
+    "politeness": 50,
+    "choice": 229,
+    "conjugation": 11
   },
-  "memoryless": {
-    "false_correction": 0.954,
-    "recall": {
-      "choice": 0.0,
-      "particle": 0.964,
-      "politeness": 0.0,
-      "conjugation": 0.0
-    },
-    "strict_correction": 0.151,
-    "explanation_ok": 0.955
-  }
+  "source": "TEC-JL (research-only, LREC 2020, human gold)",
+  "mapping": "PART->particle, AUX->politeness, INFL/TENSE->conjugation, SPELL/OTHER/content->choice; PUNCT/WO/CONJ excluded"
 }

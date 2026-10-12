@@ -92,3 +92,18 @@
   Row texts never leave the PC (no HF upload of v11 rows; only rate stats).
   LangSmith dataset is private-workspace research use. Cite LREC 2020 +
   IJCNLP 2011 in any write-up using the data.
+
+## 2026-10-12 — brain-fix verdict: correction is the bottleneck, not typing
+- Stage-B single-label LLM typing: never emits exact labels — RL model
+  rambles into English chain-of-thought despite /no_think (diag_stageb).
+  Output freedom is NOT the cause; stronger constraint can't fix rambling.
+- Rule typer (pair-based, CPU): 146/150 on m1 gold pairs, 287/402 on v11
+  gold pairs. Typing SOLVED given a good correction.
+- Same typer on stage-A corrections: m1 recall 16/37 part, 5/37 conj,
+  9/37 pol, 14/39 choice; v11 similar. Degrades to LLM levels because
+  stage-A corrections are bad (strict 0.13-0.15).
+- Also fixed: 74 TEC-JL rows with edits invisible in plain text (untestable)
+  dropped from v11 (1,288 -> 1,214); run_m3 preserves all row keys now.
+- Bottom line: the brain fix is the CORRECTOR (detection+correction
+  quality), not the typer. Next options: constrained correction (retry +
+  self-check loop), bigger/cold model, or supervised correction head.

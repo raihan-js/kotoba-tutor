@@ -1,0 +1,12 @@
+{
+  "method": "rule typer (pair-based) on gold pairs vs on stage-A corrections",
+  "gold_pair": {
+    "m1": "146/150 (particle 37/37, politeness 37/37, choice 35/39, conjugation 37/37)",
+    "v11": "287/402 (particle 101/112, politeness 36/50, choice 147/229, conjugation 3/11)"
+  },
+  "end_to_end_stageA": {
+    "m1": "recall part 16/37, conj 5/37, pol 9/37, choice 14/39",
+    "v11": "recall part 16/112, conj 2/11, pol 24/50, choice 12/229"
+  },
+  "conclusion": "typing works given good corrections; stage-A correction (strict 0.13-0.15) is the binding constraint, not typing"
+}
