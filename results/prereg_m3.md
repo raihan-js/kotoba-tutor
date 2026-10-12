@@ -32,3 +32,12 @@ on learner strings (audio loop proven separately in M2).
   helps false-correction — disclosed direction).
 - One run, temp 0, seed fixed by determinism of greedy decoding. No peeking:
   prompt frozen in this doc before the run (profile line template above).
+
+## Amendment 2026-10-12: constrained-decoding arm (brain fix candidate)
+Frozen-prompt arms showed type collapse (free-form error_type). New arm keeps
+the identical prompt text but enforces a JSON schema via vLLM guided decoding
+(error_type enum of the 5 known labels). Question: does the collapse come
+from output freedom (fixable by constraint) or from inability (needs a
+classifier head)? Decision rule: if constrained recall on non-particle types
+stays 0, inability wins and the classifier head is next. Same rows, same
+backend, temp 0. Recorded here BEFORE running.

@@ -67,3 +67,13 @@ def test_store_accumulates():
     g.invoke({"wav_path": "d.wav", "learner_id": "u3"})
     assert store["u3"]["counts"] == {"particle": 2}
     assert store["u3"]["n_sessions"] == 2
+
+
+def test_type_backend_exact_label():
+    from kotoba.graph import type_backend
+    assert type_backend("x", "は", lambda _p: "conjugation\n余計な文") == "conjugation"
+
+
+def test_type_backend_garbage_is_none():
+    from kotoba.graph import type_backend
+    assert type_backend("x", "", lambda _p: "えーと、 particle かな") == "none"

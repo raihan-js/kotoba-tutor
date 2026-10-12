@@ -92,6 +92,20 @@ def make_llm_backend(model: str = "tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2-AWQ-IN
     return run
 
 
+TYPE_LABELS = ["particle", "conjugation", "politeness", "choice", "none"]
+
+TYPE_PROMPT = """学習者の文と誤りの箇所から、誤りの種類を1語だけで答える。
+選択肢: particle, conjugation, politeness, choice, none
+文: 私は学生です。
+箇所: は
+particle
+文: 猫が好き。
+箇所: (なし)
+none
+文: {text}
+箇所: {span}
+"""
+
 ANALYSE_PROMPT = """あなたは日本語教師です。学習者の文を直し、JSON一行だけで答える。
 文: 私は学生です。
 {{"has_error": true, "error_type": "particle", "span": "は", "correction": "私が学生です。", "explanation": "ここは「が」を使う。"}}
@@ -99,6 +113,14 @@ ANALYSE_PROMPT = """あなたは日本語教師です。学習者の文を直し
 {{"has_error": false, "error_type": "none", "span": "", "correction": "猫が好き。", "explanation": ""}}
 文: {text}
 """
+
+
+def type_backend(text: str, span: str, llm_fn: Callable[[str], str]) -> str:
+    """Stage-B typing: single-label output only. Returns 'none' unless the
+    stripped first line exactly matches a known label (unparseable -> none)."""
+    raw = llm_fn(TYPE_PROMPT.format(text=text, span=span or "(なし)"))
+    first = raw.strip().splitlines()[0].strip().lower() if raw.strip() else ""
+    return first if first in TYPE_LABELS else "none"
 
 
 def analyse_backend(text: str, llm_fn: Callable[[str], str]) -> dict[str, Any]:
