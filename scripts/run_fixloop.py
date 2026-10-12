@@ -12,7 +12,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 sys.path.insert(0, "scripts")
-from rule_type import type_from_pair  # noqa: E402
+from rule_type import type_from_pair
 
 
 def main() -> None:
