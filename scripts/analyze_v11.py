@@ -21,7 +21,7 @@ def main() -> None:
         print(f"== {arm} (n={len(rows)}) ==")
         cm = Counter((r["error_type"], r[arm].get("error_type")) for r in rows)
         for (g, p), n in sorted(cm.items()):
-            print(f"  {g:12s} -> {str(p):12s} {n}")
+            print(f"  {g:12s} -> {p!s:12s} {n}")
         for et in ["particle", "conjugation", "politeness", "choice"]:
             sub = [r for r in rows if r["error_type"] == et]
             hit = sum(1 for r in sub if r[arm].get("has_error")
