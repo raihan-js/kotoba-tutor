@@ -19,6 +19,9 @@ def main() -> None:
 
     from kotoba.graph import ANALYSE_PROMPT, make_llm_backend
 
+    ds_name = sys.argv[1] if len(sys.argv) > 1 else "kotoba-corrections-300-v1"
+    tag = sys.argv[2] if len(sys.argv) > 2 else "m3"
+
     os.environ["LANGSMITH_API_KEY"] = (
         Path.home() / ".config/langsmith/key").read_text().strip()
     os.environ["LANGSMITH_TRACING"] = "false"
@@ -27,13 +30,16 @@ def main() -> None:
     llm_fn = make_llm_backend()
     mem_prompt = ANALYSE_PROMPT + PROFILE_LINE + "\n"
 
-    def run_arm(rows: list[dict], prompt: str) -> list[dict]:
+    def run_arm(rows: list[dict], prompt: str, done: dict[str, dict]) -> list[dict]:
         import kotoba.graph as G
         from kotoba.graph import analyse_backend as ab
 
         outs = []
         t0 = time.time()
         for i, r in enumerate(rows):
+            if r["id"] in done:
+                outs.append(done[r["id"]])
+                continue
             old = G.ANALYSE_PROMPT
             G.ANALYSE_PROMPT = prompt
             try:
@@ -45,12 +51,35 @@ def main() -> None:
         return outs
 
     c = Client()
-    ds = c.read_dataset(dataset_name="kotoba-corrections-300-v1")
-    rows = [{"learner": e.inputs["learner"], **e.outputs}
-            for e in c.list_examples(dataset_id=ds.id)]
+    ds = c.read_dataset(dataset_name=ds_name)
+    ex = list(c.list_examples(dataset_id=ds.id))
+    rows = []
+    for i, e in enumerate(ex):
+        r = {"id": f"r{i}", "learner": e.inputs["learner"], **e.outputs}
+        rows.append(r)
     print("rows:", len(rows))
-    mem = run_arm(rows, mem_prompt)
-    less = run_arm(rows, ANALYSE_PROMPT)
+    # Resumable: per-row outputs flushed incrementally (survives timeouts).
+    ppath = Path(f"results/{tag}_partial.jsonl")
+    partial: dict[str, dict] = {}
+    if ppath.exists():
+        for line in ppath.read_text(encoding="utf-8").splitlines():
+            d = json.loads(line)
+            partial[d["id"]] = d
+        print("resuming, partial rows:", len(partial))
+    mem = run_arm(rows, mem_prompt,
+                  {k: v["memory"] for k, v in partial.items() if "memory" in v})
+    with open(ppath, "a", encoding="utf-8") as f:
+        for r, a in zip(rows, mem):
+            if r["id"] not in partial:
+                partial[r["id"]] = {}
+            partial[r["id"]]["memory"] = a
+            f.write(json.dumps({"id": r["id"], "memory": a}, ensure_ascii=False) + "\n")
+    less = run_arm(rows, ANALYSE_PROMPT,
+                   {k: v["memoryless"] for k, v in partial.items() if "memoryless" in v})
+    with open(ppath, "a", encoding="utf-8") as f:
+        for r, a in zip(rows, less):
+            partial[r["id"]]["memoryless"] = a
+            f.write(json.dumps({"id": r["id"], "memoryless": a}, ensure_ascii=False) + "\n")
 
     def metrics(outs: list[dict]) -> dict:
         per: dict[str, dict[str, int]] = {}
@@ -78,10 +107,11 @@ def main() -> None:
                 "strict_correction": round(strict / strict_n, 3),
                 "explanation_ok": round(expl_ok / expl_n, 3) if expl_n else 1.0}
 
-    res = {"n": len(rows), "memory": metrics(mem), "memoryless": metrics(less)}
-    Path("results/m3.json").write_text(json.dumps(res, indent=2,
-                                                  ensure_ascii=False) + "\n")
-    with open("results/m3_rows.jsonl", "w", encoding="utf-8") as f:
+    res = {"n": len(rows), "dataset": ds_name,
+           "memory": metrics(mem), "memoryless": metrics(less)}
+    Path(f"results/{tag}.json").write_text(json.dumps(res, indent=2,
+                                                      ensure_ascii=False) + "\n")
+    with open(f"results/{tag}_rows.jsonl", "w", encoding="utf-8") as f:
         f.writelines(json.dumps({"learner": r["learner"], "gold": r["gold"],
                                 "error_type": r["error_type"], "memory": a,
                                 "memoryless": b}, ensure_ascii=False) + "\n" for r, a, b in zip(rows, mem, less))

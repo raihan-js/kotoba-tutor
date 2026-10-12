@@ -1,0 +1,12 @@
+{
+  "n": 1288,
+  "per_type": {
+    "none": 812,
+    "particle": 137,
+    "politeness": 58,
+    "choice": 266,
+    "conjugation": 15
+  },
+  "source": "TEC-JL (research-only, LREC 2020, human gold)",
+  "mapping": "PART->particle, AUX->politeness, INFL/TENSE->conjugation, SPELL/OTHER/content->choice; PUNCT/WO/CONJ excluded"
+}

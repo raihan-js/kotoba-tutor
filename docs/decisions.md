@@ -64,3 +64,13 @@
   gold); NAIST raw -> training pool (noisy corrections, never eval gold).
 - If NAIST is silent after ~2 weeks, proceed without it (2013 form, may be
   dead). TEC-JL lab active since 2023, expected responsive.
+
+## 2026-10-12 — disk cleanup (~52G freed, 94% -> 88%)
+- Deleted: pip cache, HF datasets arrow cache (20G), orphan model blobs
+  (ModernBERT/MiniLM/tiny-gpt2/Qwen1.5B/Kokoro/Qwen3.5-2B: 4.15G),
+  koe-bridge data/mt + data/tts (4.3G), koe-bridge .venv (7.2G, shipped, no
+  lock — rebuildable from pyproject if ever needed), Ollama qwen3.5s (9.3G),
+  pycache sweep. Owner-approved scope (safe drops only).
+- Kept: Swallow-AWQ + kotoba venv, whisper, wikipedia cache (SAE fuel),
+  akusento venvs + SBV2 voice, edit venv (v1.1), fewhumans venv (active),
+  FLEURS audio, fedproc-ledger (reviewer round), JSUT/JVS (hard to re-get).
