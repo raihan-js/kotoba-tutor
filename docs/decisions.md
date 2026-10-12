@@ -56,3 +56,11 @@
 - Neutral judge-first prompt retest: same all-誤り → not prompt framing.
 - Implication (v1.1, not now): analyse needs constrained type output or a
   classifier head, not free JSON. M2 loop itself works end to end.
+
+## 2026-10-12 — corpus access forms filed by owner (TEC-JL + NAIST Lang-8)
+- Owner submitted both Google Forms (araihansikder@gmail.com, Independent
+  Researcher Tokyo). Waiting on email replies with download links.
+- On arrival: TEC-JL -> human-gold v1.1 eval set (replaces/augments Tatoeba
+  gold); NAIST raw -> training pool (noisy corrections, never eval gold).
+- If NAIST is silent after ~2 weeks, proceed without it (2013 form, may be
+  dead). TEC-JL lab active since 2023, expected responsive.
