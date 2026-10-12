@@ -64,6 +64,7 @@ def transcribe_backend(wav_path: str) -> dict[str, Any]:
 
 
 def make_llm_backend(model: str = "tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2-AWQ-INT4",
+                     temperature: float = 0.0, seed: int | None = None,
                      ) -> Callable[[str], str]:
     import os
 
@@ -74,7 +75,8 @@ def make_llm_backend(model: str = "tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2-AWQ-IN
 
     llm = LLM(model=model, quantization="awq", gpu_memory_utilization=0.75,
               max_model_len=2048, trust_remote_code=True)
-    params = SamplingParams(max_tokens=256, temperature=0.0)
+    params = SamplingParams(max_tokens=256, temperature=temperature,
+                            seed=seed if seed is not None else 0)
 
     def run(prompt: str) -> str:
         # Chat API (not completion): the RL-instruct model echoes instructions

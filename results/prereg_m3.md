@@ -41,3 +41,13 @@ from output freedom (fixable by constraint) or from inability (needs a
 classifier head)? Decision rule: if constrained recall on non-particle types
 stays 0, inability wins and the classifier head is next. Same rows, same
 backend, temp 0. Recorded here BEFORE running.
+
+## Amendment 2026-10-12: correction retry loop (the prescribed fix)
+Typing is solved given good corrections (rule typer 97%/71% on gold pairs);
+stage-A corrections are bad (strict 0.13). New method on the Tatoeba 300:
+k=3 candidates (temp 0.7, seed 0) per row; unflag when correction==learner
+(fixes incoherent flags); else rule-type each (learner, candidate) pair and
+take the majority type with its candidate. Detection = any-flag across the 3.
+Same metrics (false-correction, per-type recall, strict). Decision rule: fix
+wins iff strict correction rises AND false-correction falls vs frozen-prompt
+baseline (0.94 / 0.13-0.15). Recorded here BEFORE running.
