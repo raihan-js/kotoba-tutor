@@ -16,6 +16,7 @@ FILES = [
     "results/m3_rows.jsonl",
     "results/prereg_m3.md",
     "results/vram.json",
+    "results/v11.json",
 ]
 
 CARD = """---
@@ -36,6 +37,9 @@ Evaluation artifacts for [kotoba-tutor](https://github.com/raihan-js/kotoba-tuto
 
 Headline M3: the Swallow-8B analyse node predicts "particle" on 285/300 rows
 and never the other three types; memory reminder has no detectable effect.
+v1.1 (`v11.json`, rates only): same frozen prompt on 1,288 TEC-JL human-gold
+rows — false-correction 0.95 [0.93, 0.97], collapse replicates. TEC-JL row
+texts are research-only and never redistributed (not in this dataset).
 """
 
 

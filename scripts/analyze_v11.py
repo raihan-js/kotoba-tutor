@@ -15,8 +15,8 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
 
 
 def main() -> None:
-    rows = [json.loads(line) for line in
-            open("results/v11_rows.jsonl", encoding="utf-8")]
+    with open("results/v11_rows.jsonl", encoding="utf-8") as f:
+        rows = [json.loads(line) for line in f]
     for arm in ["memory", "memoryless"]:
         print(f"== {arm} (n={len(rows)}) ==")
         cm = Counter((r["error_type"], r[arm].get("error_type")) for r in rows)
