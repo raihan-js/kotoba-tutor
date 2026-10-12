@@ -74,3 +74,21 @@
 - Kept: Swallow-AWQ + kotoba venv, whisper, wikipedia cache (SAE fuel),
   akusento venvs + SBV2 voice, edit venv (v1.1), fewhumans venv (active),
   FLEURS audio, fedproc-ledger (reviewer round), JSUT/JVS (hard to re-get).
+
+## 2026-10-12 — v1.1 human-gold rerun: confound dead, collapse replicates
+- TEC-JL eval (1,702 sents, dual human refs, ERRANT-JA tags) -> 1,288-row
+  set: 812 verified-correct + single-type errors (137 part / 15 conj /
+  58 polite / 266 choice). Mapping PART->particle, AUX->politeness,
+  INFL/TENSE->conjugation, SPELL/OTHER/content->choice; validated on samples.
+  LangSmith kotoba-tecjl-gold-v1 (private workspace, research use only).
+- Frozen-prompt M3 rerun, same backend: false-correction 0.947/0.954
+  CI [0.93, 0.97] (HIGHER than Tatoeba 0.92) — the unverified-gold confound
+  is dead; the model genuinely flags correct Japanese ~95% of the time.
+- Type collapse replicates exactly: particle predicted ~1,240/1,288;
+  conjugation/politeness/choice recall 0.0 (conj CI [0, 0.20], n=15).
+  Memory reminder null again. Free-form types leak (structure/character/
+  punctuation) — more evidence for constrained output in the brain fix.
+- Licence posture: TEC-JL + Lang-8 raw are research-only, NO redistribution.
+  Row texts never leave the PC (no HF upload of v11 rows; only rate stats).
+  LangSmith dataset is private-workspace research use. Cite LREC 2020 +
+  IJCNLP 2011 in any write-up using the data.

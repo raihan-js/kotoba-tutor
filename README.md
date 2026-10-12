@@ -43,6 +43,22 @@ is an UPPER bound (gold rows are unverified crowdsource; 4/4 trivial
 sentences pass). Fix is structural (constrained type output or classifier
 head) — queued as v1.1, not claimed.
 
+### v1.1 — human gold kills the confound (`results/v11.json`)
+TEC-JL (LREC 2020, research-only, never redistributed): 1,288 rows —
+812 human-verified correct + single-type errors (137/15/58/266).
+Same frozen prompt, same backend:
+
+| arm | false-correction [95% CI] | recall part/conj/pol/choice |
+|-----|--------------------------|-----------------------------|
+| memory | 0.947 [0.929, 0.960] | 0.94 / 0 / 0 / 0 |
+| memoryless | 0.954 [0.938, 0.967] | 0.96 / 0 / 0 / 0 |
+
+False-correction is HIGHER on verified-correct sentences — the
+unverified-gold confound is dead; Swallow flags correct Japanese ~95% of
+the time. Collapse replicates (particle ~1,240/1,288; free-form types like
+"structure"/"punctuation" leak). Memory null again. Row texts stay on the
+PC per licence (only rates published).
+
 ## Reproduce
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
