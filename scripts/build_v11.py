@@ -37,8 +37,9 @@ def tag_to_type(tag: str) -> str | None:
 def parse_m2(path: str) -> list[list[str]]:
     """All A-line tags per sentence; 'noop' entries kept as 'noop'."""
     sents: list[list[str]] = []
-    for line in open(path, encoding="utf-8"):
-        line = line.rstrip("\n")
+    with open(path, encoding="utf-8") as f:
+        lines = f.read().splitlines()
+    for line in lines:
         if line.startswith("S "):
             sents.append([])
         elif line.startswith("A "):
