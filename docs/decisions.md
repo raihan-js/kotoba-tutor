@@ -118,3 +118,11 @@
   needs a better generator or supervised head. Brain-fix v2 = correction
   model, not plumbing. (Side note: a stray ollama vision server held 8GB of
   GPU mid-run; owner-approved kill, uvicorn server left alone.)
+
+## 2026-10-13 — Lang-8 JA training pool extracted (50k pairs, CPU-only)
+- scripts/extract_lang8.py streams the 1.2GB .dat from the zip (no
+  extraction): Japanese-L2 journals minus TEC-JL/FLUTEC IDs (no eval
+  leakage), pairs with a differing correction, cap 50k from 6,098 journals.
+  Median learner length 24 chars. data/lang8_ja.jsonl (gitignored,
+  research-only). Training pool for brain-fix v2 (supervised correction
+  head) when GPU frees. Fixed a None-entry crash mid-run.
