@@ -51,3 +51,15 @@ take the majority type with its candidate. Detection = any-flag across the 3.
 Same metrics (false-correction, per-type recall, strict). Decision rule: fix
 wins iff strict correction rises AND false-correction falls vs frozen-prompt
 baseline (0.94 / 0.13-0.15). Recorded here BEFORE running.
+
+## Amendment 2026-10-13: supervised correction head v2 (brain fix v2)
+Stage-A correction is the binding constraint (strict 0.13-0.15). New method:
+LoRA (r=16, all attention+MLP linears) on llm-jp-3-1.8b (eager attention),
+trained on 50k Lang-8 JA pairs (learner->gold, prompt: 直せ + JSON same as
+stage A), 2 epochs, batch 8 x accum 4, lr 2e-4, seed 0. Eval FROZEN on
+TEC-JL 1,214 (same metrics: false-correction, per-type recall with the
+pair-rule typer on (learner, predicted) pairs, strict exact-match) vs the
+Swallow frozen-prompt baseline (fc 0.954, strict ~0.14). Decision rule: v2
+wins iff strict rises AND false-correction falls. TEC-JL rows never train
+(no leakage; Lang-8 extraction excluded TEC-JL/FLUTEC IDs). Recorded here
+BEFORE training.

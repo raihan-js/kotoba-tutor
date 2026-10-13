@@ -126,3 +126,15 @@
   Median learner length 24 chars. data/lang8_ja.jsonl (gitignored,
   research-only). Training pool for brain-fix v2 (supervised correction
   head) when GPU frees. Fixed a None-entry crash mid-run.
+
+## 2026-10-14 — LoRA v2 verdict: FAILED per prereg rule (copies everything)
+- LoRA r16 on llm-jp-3-1.8b, 50k Lang-8 pairs, 2 epochs (loss 0.65).
+  Frozen TEC-JL 1,214: false-correction 0.954 -> 0.085 (DOWN) but strict
+  0.14 -> 0.012 (COLLAPSED); recall ~0 all types (743+208+108+45+10 -> none).
+- Diagnosis: SFT collapse to copying. All 50k training completions were
+  has_error:true with 1-2 token edits — copying the input minimizes loss
+  (~95% tokens right), so the adapter copies almost everything. It never saw
+  a correct example either (no negatives).
+- Rule needed strict UP + fc DOWN; got the reverse. Next (v3): add correct
+  (has_error:false) examples + edit-weighted loss (upweight changed tokens),
+  or contrastive objective. Ollama untouched throughout (never reloaded).

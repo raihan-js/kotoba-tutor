@@ -1,0 +1,44 @@
+{
+  "n": 1214,
+  "method": "LoRA llm-jp-1.8B v2 + rule typer",
+  "false_correction": 0.085,
+  "per_type": {
+    "particle": {
+      "recall": 0.027,
+      "n": 112
+    },
+    "conjugation": {
+      "recall": 0.0,
+      "n": 11
+    },
+    "politeness": {
+      "recall": 0.02,
+      "n": 50
+    },
+    "choice": {
+      "recall": 0.052,
+      "n": 229
+    }
+  },
+  "strict_correction": 0.012,
+  "confusion": {
+    "choice>choice": 12,
+    "choice>none": 208,
+    "choice>particle": 2,
+    "choice>politeness": 7,
+    "conjugation>choice": 1,
+    "conjugation>none": 10,
+    "none>choice": 32,
+    "none>conjugation": 11,
+    "none>none": 743,
+    "none>particle": 3,
+    "none>politeness": 23,
+    "particle>choice": 1,
+    "particle>none": 108,
+    "particle>particle": 3,
+    "politeness>choice": 3,
+    "politeness>conjugation": 1,
+    "politeness>none": 45,
+    "politeness>politeness": 1
+  }
+}
