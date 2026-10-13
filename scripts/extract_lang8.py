@@ -27,35 +27,34 @@ def main() -> None:
                          text=True, encoding="utf-8", errors="replace")
     assert p.stdout is not None
     n_pairs = n_journals = 0
-    out = open("data/lang8_ja.jsonl", "w", encoding="utf-8")
-    for line in p.stdout:
-        try:
-            row = json.loads(line)
-            jid, l2 = int(row[0]), row[2]
-            if "Japanese" not in l2 or jid in skip:
-                continue
-            n_journals += 1
-            for src, trgs in zip(row[4] or [], row[5] or []):
-                if not isinstance(src, str):
+    with open("data/lang8_ja.jsonl", "w", encoding="utf-8") as out:
+        for line in p.stdout:
+            try:
+                row = json.loads(line)
+                jid, l2 = int(row[0]), row[2]
+                if "Japanese" not in l2 or jid in skip:
                     continue
-                src = remove_tags(src.replace("\t", " "))
-                for t in trgs or []:
-                    if not isinstance(t, str):
+                n_journals += 1
+                for src, trgs in zip(row[4] or [], row[5] or []):
+                    if not isinstance(src, str):
                         continue
-                    t = remove_tags(t.replace("\t", " "))
-                    if t and t != src and 5 <= len(src) <= 300:
-                        out.write(json.dumps(
-                            {"learner": src, "gold": t, "journal": jid},
-                            ensure_ascii=False) + "\n")
-                        n_pairs += 1
+                    src = remove_tags(src.replace("\t", " "))
+                    for t in trgs or []:
+                        if not isinstance(t, str):
+                            continue
+                        t = remove_tags(t.replace("\t", " "))
+                        if t and t != src and 5 <= len(src) <= 300:
+                            out.write(json.dumps(
+                                {"learner": src, "gold": t, "journal": jid},
+                                ensure_ascii=False) + "\n")
+                            n_pairs += 1
+                            break
+                    if n_pairs >= cap:
                         break
-                if n_pairs >= cap:
-                    break
-        except (ValueError, IndexError, TypeError):
-            continue
-        if n_pairs >= cap:
-            break
-    out.close()
+            except (ValueError, IndexError, TypeError):
+                continue
+            if n_pairs >= cap:
+                break
     p.wait()
     print(f"journals: {n_journals}, pairs: {n_pairs}")
 
