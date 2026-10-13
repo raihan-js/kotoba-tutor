@@ -10,6 +10,7 @@ import re
 import subprocess
 import sys
 
+
 def remove_tags(s: str) -> str:
     return re.sub(r"\[.*?\]", "", s).strip()
 
@@ -17,7 +18,8 @@ def remove_tags(s: str) -> str:
 def main() -> None:
     cap = int(sys.argv[1]) if len(sys.argv) > 1 else 50000
     sys.path.insert(0, "/tmp/opencode")
-    from make_pairs import tecjl as T, fluency_corpus as F  # noqa: E402
+    from make_pairs import fluency_corpus as F
+    from make_pairs import tecjl as T
     skip = set(T) | set(F)
     zpath = "data/corpora/lang8-raw.zip"
     inner = "lang-8-20111007-2.0/lang-8-20111007-L1-v2.dat"
