@@ -17,6 +17,10 @@ FILES = [
     "results/prereg_m3.md",
     "results/vram.json",
     "results/v11.json",
+    "results/fixloop.json",
+    "results/ruletyper.json",
+    "results/lora_train.json",
+    "results/lora_eval.json",
 ]
 
 CARD = """---

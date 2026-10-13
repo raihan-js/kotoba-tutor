@@ -59,6 +59,15 @@ the time. Collapse replicates (particle ~1,240/1,288; free-form types like
 "structure"/"punctuation" leak). Memory null again. Row texts stay on the
 PC per licence (only rates published).
 
+### v2 — supervised head collapses the other way (`results/lora_eval.json`)
+LoRA r16 on llm-jp-3-1.8B, 50k Lang-8 pairs, 2 epochs: false-correction
+0.954 → 0.085 BUT strict 0.14 → 0.012, recall ~0 everywhere. Diagnosis: SFT
+collapse to copying — every training completion was has_error:true with
+1-2 token edits, so repeating the input minimizes loss; it never saw a
+correct example. Fix needs negatives + edit-weighted loss (v3, unstarted).
+From trigger-happy base to copy-everything adapter: both failure modes
+measured, neither shipped as a tutor.
+
 ## Reproduce
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"
