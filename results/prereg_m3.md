@@ -63,3 +63,24 @@ Swallow frozen-prompt baseline (fc 0.954, strict ~0.14). Decision rule: v2
 wins iff strict rises AND false-correction falls. TEC-JL rows never train
 (no leakage; Lang-8 extraction excluded TEC-JL/FLUTEC IDs). Recorded here
 BEFORE training.
+
+## Amendment 2026-10-15: supervised head v3 (negatives + edit-weighted loss)
+v2 collapsed to copying (strict 0.012): all 50k completions were
+has_error:true with 1-2 token edits, never a correct example. v3 changes:
+(1) add ~10k correct Tatoeba sentences as has_error:false negatives
+(correction==input; from the M1 pool, disjoint from eval); (2) edit-weighted
+loss: completion tokens absent from the prompt token set get 4x weight
+(documented crude novelty proxy at token-id level, no alignment attempted).
+Same base (llm-jp-3-1.8b), same LoRA config, 2 epochs, lr 2e-4, seed 0.
+Output: models/lora-v3 (v2 adapter kept untouched). Eval FROZEN TEC-JL 1,214
+(same metrics, same rule typer) vs v2 (fc 0.085, strict 0.012) and Swallow
+baseline (fc 0.954, strict ~0.14). Decision rule: v3 wins iff strict rises
+vs v2 AND false-correction stays below 0.5. Recorded here BEFORE training.
+
+## Correction 2026-10-15: v3a run invalid (negatives silently dropped)
+The finished "v3" adapter trained with edit-weighted loss ONLY: the epoch
+loop iterated len(rows) (50k) while negatives sat in texts/golds unused
+(steps 3124 == v2 count; log line confirms 10050 negatives built but
+untouched). Adapter preserved as models/lora-v3-weighted-only (useful
+ablation: weighting alone). Script fixed (loop over len(texts), per-epoch
+seed), relaunching as the true v3. Recorded BEFORE the relaunch.

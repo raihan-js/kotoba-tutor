@@ -1,0 +1,46 @@
+{
+  "n": 1214,
+  "method": "LoRA llm-jp-1.8B v3 (negatives + edit-weighted loss) + rule typer",
+  "false_correction": 0.166,
+  "per_type": {
+    "particle": {
+      "recall": 0.0,
+      "n": 112
+    },
+    "conjugation": {
+      "recall": 0.0,
+      "n": 11
+    },
+    "politeness": {
+      "recall": 0.02,
+      "n": 50
+    },
+    "choice": {
+      "recall": 0.1,
+      "n": 229
+    }
+  },
+  "strict_correction": 0.03,
+  "confusion": {
+    "choice>choice": 23,
+    "choice>conjugation": 2,
+    "choice>none": 188,
+    "choice>particle": 7,
+    "choice>politeness": 9,
+    "conjugation>none": 10,
+    "conjugation>particle": 1,
+    "none>choice": 71,
+    "none>conjugation": 12,
+    "none>none": 677,
+    "none>particle": 7,
+    "none>politeness": 45,
+    "particle>choice": 5,
+    "particle>none": 102,
+    "particle>politeness": 5,
+    "politeness>conjugation": 1,
+    "politeness>none": 47,
+    "politeness>particle": 1,
+    "politeness>politeness": 1
+  },
+  "epochs_note": "effectively ~1.1 epochs (ckpt resume granularity, disclosed)"
+}

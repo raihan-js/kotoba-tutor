@@ -21,6 +21,8 @@ FILES = [
     "results/ruletyper.json",
     "results/lora_train.json",
     "results/lora_eval.json",
+    "results/lora_train_v3.json",
+    "results/lora_eval_v3.json",
 ]
 
 CARD = """---

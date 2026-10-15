@@ -138,3 +138,16 @@
 - Rule needed strict UP + fc DOWN; got the reverse. Next (v3): add correct
   (has_error:false) examples + edit-weighted loss (upweight changed tokens),
   or contrastive objective. Ollama untouched throughout (never reloaded).
+
+## 2026-10-15 — LoRA v3 verdict: PASSES prereg rule, correction still ~zero
+- v3 (negatives + 4x novel-token weight, ~1.1 effective epochs): fc 0.166
+  (< 0.5 ✓), strict 0.030 (vs v2 0.012, UP 2.5x ✓). Both prereg conditions
+  met: PASS — but absolute correction quality remains near-zero (recall ~0
+  all types; 102/112 particles -> none).
+- Honest read: the operating point moved (conservative, stops flagging),
+  correction not learned. Negatives taught restraint, not repair. v2 copied
+  everything; v3 flags almost nothing; neither corrects. The rule was
+  lenient; reporting the PASS with the absolutes beside it, no goalpost move.
+- v3a postscript: the invalid weighted-only run was a useful accident —
+  weighting alone (v2 0.085 fc) vs weighting+negatives (0.166 fc) suggests
+  negatives cost some restraint while buying strict 0.012 -> 0.030.

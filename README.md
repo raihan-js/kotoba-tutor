@@ -68,6 +68,13 @@ correct example. Fix needs negatives + edit-weighted loss (v3, unstarted).
 From trigger-happy base to copy-everything adapter: both failure modes
 measured, neither shipped as a tutor.
 
+### v3 — negatives teach restraint, not repair (`results/lora_eval_v3.json`)
+LoRA on 50k Lang-8 pairs + 10k correct negatives, novel completion tokens at
+4x loss: false-correction 0.954 → 0.166, strict 0.012 → 0.030. PASSES the
+pre-registered rule (strict up + fc < 0.5) — but recall stays ~0 everywhere.
+v2 copied everything, v3 flags almost nothing, neither corrects. (~1.1
+effective epochs via checkpoint granularity, disclosed.)
+
 ## Reproduce
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"

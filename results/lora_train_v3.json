@@ -1,0 +1,7 @@
+{
+  "epochs": 2,
+  "rows": 60050,
+  "steps": 2076,
+  "final_loss": 1.665,
+  "secs": 6135
+}
